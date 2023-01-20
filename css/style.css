@@ -1,0 +1,175 @@
+*{
+   
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(87, 86, 86);
+}
+
+.kanbam{
+    padding: 30px;
+}
+h1{
+    text-align: center;
+    color: #fff;
+}
+
+/* Mudar quando for dinamico*/
+.card-day{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 500px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #FFD700;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
+
+}
+
+.today{
+    border: 4px solid rgb(0, 255, 0);
+}
+
+.title{
+    padding: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-bottom: 2px solid black;
+}
+
+.card-info{
+    padding: 1px;
+    font-size: 20px;
+    font-weight: normal;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-bottom: 2px dotted black;
+}
+
+.content{
+    height: 70%;
+    border-bottom: 2px solid black;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.card-task{
+    width: 250px;
+    height: 150px;
+    margin: 20px 0 20px 0;
+    background-color: rgb(161, 211, 252);
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
+    
+}
+
+/* Mudar quando for ficar dinamico */
+.title-task-01{
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.description{
+    width: 100%;
+    height: 50px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+.controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+}
+
+.card-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.done{
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    width: 80px;
+    margin-left: 20px;
+    height: 28px;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.remove{
+    display: flex;
+    background-color: rgb(255, 38, 0);
+    width: 50px;
+    height: 28px;
+    color: #fff;
+    font-size: 30px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.add,.add-new-btn{
+    margin: 20px;
+    background-color: rgb(0, 255, 76);
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.remove-all{
+    display: flex;
+    margin: 20px;
+    width: 150px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    color: #ffff;
+    font-size: 20px;
+    background-color: rgb(255, 0, 98);
+    
+}
+
+.add, .remove-all, .remove, .done{
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
+} 
+
+.add:hover, .remove-all:hover, .remove:hover, .done:hover{
+    cursor: pointer;
+    background-color: rgb(255, 136, 0);
+    color: rgb(255, 255, 255);
+} 
+
+
+.add-new-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
