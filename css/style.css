@@ -14,13 +14,16 @@ h1{
     color: #fff;
 }
 
+.container{
+    display: flex;
+}
 /* Mudar quando for dinamico*/
 .card-day{
     display: flex;
     flex-direction: column;
     width: 300px;
     height: 500px;
-    margin-top: 10px;
+    margin: 10px;
     text-align: center;
     border-radius: 10px;
     background-color: #FFD700;
@@ -58,6 +61,7 @@ h1{
     align-items: center;
     flex-wrap: nowrap;
 }
+
 .card-task{
     width: 250px;
     height: 150px;
@@ -68,7 +72,7 @@ h1{
 }
 
 /* Mudar quando for ficar dinamico */
-.title-task-01{
+.title-task{
     font-size: 20px;
     color: rgb(255, 255, 255);
 }
@@ -126,7 +130,7 @@ h1{
     margin-bottom: 20px;
 }
 
-.add,.add-new-btn{
+.add, .add-card, .back{
     margin: 20px;
     background-color: rgb(0, 255, 76);
     width: 50px;
@@ -153,18 +157,25 @@ h1{
     
 }
 
-.add, .remove-all, .remove, .done{
+.add, .remove-all, .remove, .done, .add-card, .back{
     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
 } 
 
-.add:hover, .remove-all:hover, .remove:hover, .done:hover{
+.add:hover, .remove-all:hover, .remove:hover, .done:hover, .add-card:hover, .back:hover{
     cursor: pointer;
     background-color: rgb(255, 136, 0);
     color: rgb(255, 255, 255);
 } 
 
+.disabled{
+    display: none;
+}
 
 .add-new-card{
+    display: none;
+}
+
+.add-new-card.active{
     display: flex;
     flex-direction: column;
     justify-content: center;
