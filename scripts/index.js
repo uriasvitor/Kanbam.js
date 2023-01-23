@@ -1,12 +1,13 @@
 (function(){
-    const getContent = document.querySelector(".content")
+    const getContent = document.querySelector(".cards-section")
     const add_Card =  document.querySelector(".add")
     const cardForm = document.querySelector(".add-new-card")
     const getNewCardBtn = document.querySelector(".add-card")
     const backBtn = document.querySelector(".back")
     const removeAllCards = document.querySelector(".remove-all")
-    const finishCard = document.querySelectorAll(".done")
-    const cardsFinished = []
+    const cardsFinishes = document.querySelector(".card-finish")
+    let cardId = 1;
+    let cardCompleted = 0;
 
     openCardForm = ()=>{
         cardForm.classList.toggle("active")
@@ -27,8 +28,12 @@
         const cardBox = document.createElement("div")
         const titleCard = document.createElement("div")
         const descriptionCard = document.createElement("div")
+        const timeCard = document.createElement("div")
+        let currentHourNow = dateHour();
+
+        cardId++
         
-        cardBox.classList.add("card-task")
+        cardBox.classList.add("card-task-" + cardId)
 
         titleCard.classList.add("title-task")
         titleCard.innerHTML = ` <p>${titleValue}</p>`
@@ -36,52 +41,117 @@
         descriptionCard.classList.add("description")
         descriptionCard.innerHTML = `${descriptionValue}`
 
-        console.log(titleCard)
-        getContent.appendChild(cardBox).appendChild(titleCard)
+        timeCard.classList.add("timeNow")
+        timeCard.innerHTML = `${currentHourNow}`
+
+        getContent.appendChild(cardBox, cardId).appendChild(titleCard)
         cardBox.appendChild(descriptionCard)
+        cardBox.appendChild(timeCard)
         
-        cardControl()
+        cardControl(cardId)
         closeCardForm()
     }
 
-    function cardControl(){
-        const allCards = document.querySelectorAll(".card-task")
+    function cardControl(index) {
+        cardNumber = `.card-task-${index}`
+        const allCards = document.querySelector(cardNumber)
+    
+        const controlDiv = createControlDiv();
+        const removeControlDiv = createRemoveControlDiv(index);
+        const doneControlDiv = createDoneControlDiv(index);
+    
+        allCards.appendChild(controlDiv).appendChild(removeControlDiv)
+        controlDiv.append(doneControlDiv)
+    
+        doneControlDiv.addEventListener("click", () => {
+            doneCard(index)
+        })
+        removeControlDiv.addEventListener("click", () => {
+            removeCard(index)
+        })
+    }
+    
+    function createControlDiv() {
         const controlDiv = document.createElement("div")
-        const removeControlDiv = document.createElement("div")
-        const doneControlDiv = document.createElement("div")
         controlDiv.classList.add("card-control")
-
-        removeControlDiv.classList.add("remove")
+        return controlDiv;
+    }
+    
+    function createRemoveControlDiv(index) {
+        const removeControlDiv = document.createElement("div")
+        removeControlDiv.classList.add(`remove-${index}`)
         removeControlDiv.innerHTML = "-"
-
-        doneControlDiv.classList.add("done")
-        doneControlDiv.innerHTML = "done"
-
-        for(let i = 0; max = allCards.length, i < max; i+= 1){
-            allCards[i]
-                .appendChild(controlDiv)
-                .appendChild(removeControlDiv)
-
-            controlDiv.append(doneControlDiv)
-
-        }
+        return removeControlDiv
+    }
+    
+    function createDoneControlDiv(index) {
+        const doneControlDiv = document.createElement("div")
+        doneControlDiv.classList.add(`done-${index}`)
+        doneControlDiv.innerHTML = "Feito"
+        return doneControlDiv
     }
 
-    const doneCard = ()=>{
-        for(let i = 0; max = finishCard.length, i < max; i+= 1){
-            console.log(finishCard[i])
+    function doneCard(index){
+        const cardNumber = `.card-task-${index}`
+        const doneBtnNumber = `.done-${index}`
+
+        const doneBtn = document.querySelector(doneBtnNumber)
+        const card = document.querySelector(cardNumber)
+
+        card.classList.add("closed")
+        doneBtn.classList.toggle("selected")
+
+        if(doneBtn.classList.contains("selected")){
+            cardCompleted += 1;
+        }else{
+            card.classList.remove("closed")
+            cardCompleted -= 1;
+        }
+
+        cardsFinished(cardCompleted)
+
+    }
+
+    function cardsFinished(number){
+        cardsFinishes.innerHTML = number
+    }
+
+    function removeCard(index){
+        const cardNumber = `.card-task-${index}`
+        const card = document.querySelector(cardNumber)
+
+        card.remove()
+        
+        if(card.classList.contains('closed')){
+            cardCompleted -= 1
+            cardsFinished(cardCompleted)
         }
     }
 
     const removeAll = ()=>{
-        const allCards = document.querySelectorAll(".card-task")
+        const allCards = document.querySelector(".cards-section")
 
-        for(let i = 0; max = allCards.length, i < max; i+= 1){
-            allCards[i].remove()
+        while(allCards.firstChild){
+            allCards.removeChild(allCards.firstChild)
         }
+
+        cardId = 1;
+        cardCompleted = 0;
+
+        cardsFinished(cardCompleted)
     }
 
-    // finishCard.addEventListener("click", doneCard)
+    function dateHour(currentHourNow){
+        let currentTime = new Date();
+        let currentHour = currentTime.getHours();
+        let currentMinutes = currentTime.getMinutes().toString().padStart(2, "0");
+        let ampm = currentHour < 12 ? "AM" : "PM";
+        currentHour = currentHour % 12 || 12;
+        return currentHour + ":" + currentMinutes + " " + ampm
+    }
+
+    dateHour()
+
     removeAllCards.addEventListener("click", removeAll)
     add_Card.addEventListener("click", openCardForm)
     getNewCardBtn.addEventListener("click", createCard)

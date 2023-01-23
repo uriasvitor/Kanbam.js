@@ -22,7 +22,7 @@ h1{
     display: flex;
     flex-direction: column;
     width: 300px;
-    height: 500px;
+    height: 580px;
     margin: 10px;
     text-align: center;
     border-radius: 10px;
@@ -36,7 +36,7 @@ h1{
 }
 
 .title{
-    padding: 30px;
+    padding: 20px;
     font-size: 30px;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -62,15 +62,18 @@ h1{
     flex-wrap: nowrap;
 }
 
-.card-task{
+[class*='card-task']{
     width: 250px;
-    height: 150px;
+    height: 160px;
     margin: 20px 0 20px 0;
     background-color: rgb(161, 211, 252);
     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
     
 }
 
+p{
+    margin: 0;
+}
 /* Mudar quando for ficar dinamico */
 .title-task{
     font-size: 20px;
@@ -101,7 +104,7 @@ h1{
     text-align: center;
 }
 
-.done{
+[class*='done-']{
     display: flex;
     background-color: rgb(255, 255, 255);
     width: 80px;
@@ -116,7 +119,11 @@ h1{
     margin-bottom: 20px;
 }
 
-.remove{
+.closed{
+    background-color: rgb(185, 185, 185);
+}
+
+[class*='remove-']{
     display: flex;
     background-color: rgb(255, 38, 0);
     width: 50px;
@@ -157,11 +164,11 @@ h1{
     
 }
 
-.add, .remove-all, .remove, .done, .add-card, .back{
+.add, .remove-all, [class*='remove-'], [class*='done-'], .add-card, .back{
     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
 } 
 
-.add:hover, .remove-all:hover, .remove:hover, .done:hover, .add-card:hover, .back:hover{
+.add:hover, .remove-all:hover, [class*='remove-']:hover, [class*='done-']:hover, .add-card:hover, .back:hover{
     cursor: pointer;
     background-color: rgb(255, 136, 0);
     color: rgb(255, 255, 255);
@@ -180,5 +187,22 @@ h1{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+label{
+    font-size: 20px;
+}
+
+input[type="text"]{
+    font-size: 15px;
+    background-color: #c9c9c9;
+    border-radius: 5px;
+    height: 30px;
+    color: black;
+}
+
+.timeNow{
+    margin-bottom: 10px;
 }
 
