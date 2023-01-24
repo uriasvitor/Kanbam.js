@@ -43,13 +43,26 @@
 
         timeCard.classList.add("timeNow")
         timeCard.innerHTML = `${currentHourNow}`
-
         getContent.appendChild(cardBox, cardId).appendChild(titleCard)
         cardBox.appendChild(descriptionCard)
         cardBox.appendChild(timeCard)
         
         cardControl(cardId)
         closeCardForm()
+
+        const card = {
+            id:cardId,
+            title:titleValue,
+            description: descriptionValue,
+            time: currentHourNow,
+        }
+
+        let cards = JSON.parse(localStorage.getItem('cards')) || []
+
+        cards.push(card)
+
+        localStorage.setItem('cards', JSON.stringify(cards))
+
     }
 
     function cardControl(index) {
@@ -62,7 +75,7 @@
     
         allCards.appendChild(controlDiv).appendChild(removeControlDiv)
         controlDiv.append(doneControlDiv)
-    
+        
         doneControlDiv.addEventListener("click", () => {
             doneCard(index)
         })
@@ -138,6 +151,7 @@
         cardId = 1;
         cardCompleted = 0;
 
+        localStorage.removeItem("cards")
         cardsFinished(cardCompleted)
     }
 
@@ -150,7 +164,38 @@
         return currentHour + ":" + currentMinutes + " " + ampm
     }
 
-    dateHour()
+    function displayCards() {
+        let cards = JSON.parse(localStorage.getItem('cards')) || []
+    
+        for (let card of cards) {
+            const cardBox = document.createElement("div")
+            const titleCard = document.createElement("div")
+            const descriptionCard = document.createElement("div")
+            const timeCard = document.createElement("div")
+            cardId++
+
+            cardBox.classList.add("card-task-" + card.id)
+    
+            titleCard.classList.add("title-task")
+            titleCard.innerHTML = ` <p>${card.title}</p>`
+    
+            descriptionCard.classList.add("description")
+            descriptionCard.innerHTML = `${card.description}`
+    
+            timeCard.classList.add("timeNow")
+            timeCard.innerHTML = `${card.time}`
+    
+            cardBox.appendChild(titleCard)
+            cardBox.appendChild(descriptionCard)
+            cardBox.appendChild(timeCard)
+    
+            getContent.appendChild(cardBox)
+
+            cardControl(card.id)
+        }
+    }
+
+    displayCards()
 
     removeAllCards.addEventListener("click", removeAll)
     add_Card.addEventListener("click", openCardForm)
