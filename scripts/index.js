@@ -8,7 +8,7 @@
     const cardsFinishes = document.querySelector(".card-finish")
     let cardId = 1;
     let cardCompleted = 0;
-
+    
     openCardForm = ()=>{
         cardForm.classList.toggle("active")
         add_Card.classList.toggle("disabled")
@@ -49,19 +49,8 @@
         
         cardControl(cardId)
         closeCardForm()
-
-        const card = {
-            id:cardId,
-            title:titleValue,
-            description: descriptionValue,
-            time: currentHourNow,
-        }
-
-        let cards = JSON.parse(localStorage.getItem('cards')) || []
-
-        cards.push(card)
-
-        localStorage.setItem('cards', JSON.stringify(cards))
+        
+        saveCard(cardId,titleValue,descriptionValue,currentHourNow,0)
 
     }
 
@@ -106,19 +95,17 @@
 
     function doneCard(index){
         const cardNumber = `.card-task-${index}`
-        const doneBtnNumber = `.done-${index}`
 
-        const doneBtn = document.querySelector(doneBtnNumber)
         const card = document.querySelector(cardNumber)
 
-        card.classList.add("closed")
-        doneBtn.classList.toggle("selected")
+        card.classList.toggle("closed")
 
-        if(doneBtn.classList.contains("selected")){
+        if(card.classList.contains("closed")){
             cardCompleted += 1;
+            cardStoraged(index,'closed')
         }else{
-            card.classList.remove("closed")
-            cardCompleted -= 1;
+            cardCompleted-- ;
+            cardStoraged(index)
         }
 
         cardsFinished(cardCompleted)
@@ -127,6 +114,10 @@
 
     function cardsFinished(number){
         cardsFinishes.innerHTML = number
+        
+        if(!number)return
+
+        localStorage.setItem("cardsFinished",number)
     }
 
     function removeCard(index){
@@ -134,7 +125,7 @@
         const card = document.querySelector(cardNumber)
 
         card.remove()
-        
+
         if(card.classList.contains('closed')){
             cardCompleted -= 1
             cardsFinished(cardCompleted)
@@ -147,35 +138,55 @@
         while(allCards.firstChild){
             allCards.removeChild(allCards.firstChild)
         }
-
+        
         cardId = 1;
         cardCompleted = 0;
-
-        localStorage.removeItem("cards")
+        
+        localStorage.clear();
         cardsFinished(cardCompleted)
     }
-
+    
     function dateHour(currentHourNow){
-        let currentTime = new Date();
-        let currentHour = currentTime.getHours();
-        let currentMinutes = currentTime.getMinutes().toString().padStart(2, "0");
-        let ampm = currentHour < 12 ? "AM" : "PM";
-        currentHour = currentHour % 12 || 12;
-        return currentHour + ":" + currentMinutes + " " + ampm
+        let currentTime = new Date().toLocaleString();
+        return currentTime
+    }
+    
+    function saveCard(cardId, titleValue,descriptionValue,currentHourNow,status,btnStatus){
+
+        const card = {
+            id:cardId,
+            title:titleValue,
+            description: descriptionValue,
+            time: currentHourNow,
+            status:status,
+        }
+
+        let cards = JSON.parse(localStorage.getItem('cards')) || []
+        cards.push(card)
+
+        localStorage.setItem('cards', JSON.stringify(cards))
     }
 
-    function displayCards() {
+    function displaySavedCards() {
+        
+        cardsFinished(localStorage.getItem('cardsFinished'))
+
+        numeration = localStorage.getItem("cardsFinished")
+        cardCompleted = numeration;
+        
         let cards = JSON.parse(localStorage.getItem('cards')) || []
-    
+        console.log(cards)
+
         for (let card of cards) {
             const cardBox = document.createElement("div")
             const titleCard = document.createElement("div")
             const descriptionCard = document.createElement("div")
             const timeCard = document.createElement("div")
+            
             cardId++
-
-            cardBox.classList.add("card-task-" + card.id)
-    
+            
+            cardBox.classList.add("card-task-" + card.id, card.status)
+            
             titleCard.classList.add("title-task")
             titleCard.innerHTML = ` <p>${card.title}</p>`
     
@@ -195,7 +206,21 @@
         }
     }
 
-    displayCards()
+    function cardStoraged(id,state){
+        const cards =  JSON.parse(localStorage.getItem("cards"))
+        const getId = cards.find((obj)=>{
+            return obj.id == id
+        })
+
+        getId.status = state
+
+        localStorage.setItem("cards", JSON.stringify(cards))
+        console.log(localStorage.getItem("cards"))
+        
+    }
+
+
+    displaySavedCards()
 
     removeAllCards.addEventListener("click", removeAll)
     add_Card.addEventListener("click", openCardForm)
