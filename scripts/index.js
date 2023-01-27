@@ -8,7 +8,8 @@
     const cardsFinishes = document.querySelector(".card-finish")
     let cardId = 1;
     let cardCompleted = 0;
-    
+  
+
     openCardForm = ()=>{
         cardForm.classList.toggle("active")
         add_Card.classList.toggle("disabled")
@@ -101,13 +102,13 @@
         card.classList.toggle("closed")
 
         if(card.classList.contains("closed")){
-            cardCompleted += 1;
+            cardCompleted++;
             cardStoraged(index,'closed')
         }else{
             cardCompleted-- ;
             cardStoraged(index)
         }
-
+        console.log(cardCompleted)
         cardsFinished(cardCompleted)
 
     }
@@ -115,7 +116,7 @@
     function cardsFinished(number){
         cardsFinishes.innerHTML = number
         
-        if(!number)return
+        if(number == null || undefined)return
 
         localStorage.setItem("cardsFinished",number)
     }
@@ -130,6 +131,8 @@
             cardCompleted -= 1
             cardsFinished(cardCompleted)
         }
+
+        deleteCard(index)
     }
 
     const removeAll = ()=>{
@@ -151,7 +154,7 @@
         return currentTime
     }
     
-    function saveCard(cardId, titleValue,descriptionValue,currentHourNow,status,btnStatus){
+    function saveCard(cardId, titleValue,descriptionValue,currentHourNow,status){
 
         const card = {
             id:cardId,
@@ -175,7 +178,6 @@
         cardCompleted = numeration;
         
         let cards = JSON.parse(localStorage.getItem('cards')) || []
-        console.log(cards)
 
         for (let card of cards) {
             const cardBox = document.createElement("div")
@@ -215,8 +217,17 @@
         getId.status = state
 
         localStorage.setItem("cards", JSON.stringify(cards))
-        console.log(localStorage.getItem("cards"))
         
+    }
+
+    function deleteCard(id) {
+        const cards = JSON.parse(localStorage.getItem("cards"))
+        const updatedCards = cards.filter((obj) => {
+            return obj.id != id
+        })
+        
+        localStorage.setItem("cards", JSON.stringify(updatedCards))
+
     }
 
 
