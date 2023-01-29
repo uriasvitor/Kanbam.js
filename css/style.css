@@ -1,5 +1,3 @@
-*{}
-
 body{
     margin: 0;
     padding: 0;
@@ -9,6 +7,7 @@ body{
 .kanbam{
     padding: 30px;
 }
+
 h1{
     text-align: center;
     color: #fff;
@@ -18,7 +17,7 @@ h1{
     display: flex;
 }
 /* Mudar quando for dinamico*/
-.card-day{
+[class*='card-day']{
     display: flex;
     flex-direction: column;
     width: 300px;
@@ -35,7 +34,7 @@ h1{
     border: 4px solid rgb(0, 255, 0);
 }
 
-.title{
+[class*='title']{
     padding: 20px;
     font-size: 30px;
     font-weight: bold;
@@ -43,7 +42,13 @@ h1{
     border-bottom: 2px solid black;
 }
 
-.card-info{
+[class*='title-task']{
+    font-size: 18px;
+    border-bottom: 1px solid black;
+    color: #fff;
+}
+
+[class*='card-info-']{
     padding: 1px;
     font-size: 20px;
     font-weight: normal;
@@ -51,7 +56,7 @@ h1{
     border-bottom: 2px dotted black;
 }
 
-.content{
+[class*='content']{
     height: 70%;
     border-bottom: 2px solid black;
     display: flex;
@@ -64,7 +69,7 @@ h1{
 
 [class*='card-task']{
     width: 250px;
-    height: 160px;
+    height: 200px;
     margin: 20px 0 20px 0;
     background-color: rgb(161, 211, 252);
     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
@@ -75,20 +80,17 @@ p{
     margin: 0;
 }
 /* Mudar quando for ficar dinamico */
-.title-task{
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-}
 
-.description{
+[class*='description']{
     width: 100%;
     height: 50px;
+    margin-top: 10px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
 }
 
-.controls{
+[class*='controls']{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -97,7 +99,7 @@ p{
     margin-top: 20px;
 }
 
-.card-control{
+[class*='card-control']{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -137,7 +139,7 @@ p{
     margin-bottom: 20px;
 }
 
-.add, .add-card, .back{
+[class*='open-form-'], [class*='add-card'], [class*='back']{
     margin: 20px;
     background-color: rgb(0, 255, 76);
     width: 50px;
@@ -150,7 +152,7 @@ p{
     font-size: 20px;
 }
 
-.remove-all{
+[class*='remove-all']{
     display: flex;
     margin: 20px;
     width: 150px;
@@ -164,11 +166,11 @@ p{
     
 }
 
-.add, .remove-all, [class*='remove-'], [class*='done-'], .add-card, .back{
+[class*='open-form-'], [class*='remove-all'], [class*='remove'], [class*='done'], [class*='add-card'], [class*='back']{
     box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.14) , 0px 3px 1px -2px rgba(0,0,0,0.12) , 0px 1px 5px 0px rgba(0,0,0,0.2);
 } 
 
-.add:hover, .remove-all:hover, [class*='remove-']:hover, [class*='done-']:hover, .add-card:hover, .back:hover{
+[class*='open-form-']:hover, [class*='remove-all']:hover, [class*='remove']:hover, [class*='done']:hover, [class*='add-card']:hover, [class*='back']:hover{
     cursor: pointer;
     background-color: rgb(255, 136, 0);
     color: rgb(255, 255, 255);
@@ -178,11 +180,13 @@ p{
     display: none;
 }
 
-.add-new-card{
+[class*='add-new-card']{
     display: none;
+    width: 100%;
+    height: 100%;
 }
 
-.add-new-card.active{
+[class*='add-new-card'].active{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -202,7 +206,7 @@ input[type="text"]{
     color: black;
 }
 
-.timeNow{
+[class*='timeNow']{
     margin-bottom: 10px;
 }
 
