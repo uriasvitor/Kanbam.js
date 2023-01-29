@@ -1,10 +1,11 @@
 let spel = '';
+let yesterday = '';
 
 (function(){
     const getContainer = document.querySelector('.container')
 
     function createCardDay(){
-        getContainer.classList.add(spel)
+        getContainer.classList.add(spel, yesterday)
 
         createCard = document.createElement("div")
         createCard.classList.add("card-day-" + spel)
@@ -48,41 +49,47 @@ let spel = '';
         createCard.append(createCardContent)
         createCard.append(createCardControls)
         createCard.append(createCardNewCard)
-         
+        
     }
 
-
     function getDayWeek(day){
-        let today = new Date().getDay();
+       day = new Date().getDay();
 
-            switch (today) {
+            switch (day) {
                 case 0:
                     day = "Domingo";
                     spel = "do"
+                    yesterday = "se"
                     break;
                 case 1:
                     day = "Segunda-feira";
                     spel = "se"
+                    yesterday = "do"
                     break;
                 case 2:
                     day = "Terça-feira";
                     spel = "te"
+                    yesterday = "se"
                     break;
                 case 3:
                     day = "Quarta-feira";
                     spel = "qa"
+                    yesterday = "te"
                     break;
                 case 4:
                     day = "Quinta-feira";
                     spel = "qu"
+                    yesterday = "qa"
                     break;
                 case 5:
                     day = "Sexta-feira";
-                    spel = "se"
+                    spel = "sx"
+                    yesterday = "qu"
                     break;
                 case 6:
                     day = "Sábado";
                     spel = "sa"
+                    yesterday = "sx"
                     break;
                 default:
                     day = "Dia inválido";
@@ -94,7 +101,5 @@ let spel = '';
     const day = getDayWeek();
 
     createCardDay()
-    console.log(day)
-    console.log(spel)
 
 })()

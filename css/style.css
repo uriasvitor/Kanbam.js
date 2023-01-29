@@ -210,3 +210,13 @@ input[type="text"]{
     margin-bottom: 10px;
 }
 
+.readOnly [class*='open-form-'], .readOnly [class*='remove-all'], .readOnly [class*='card-day']{
+    background-color: #c9c9c9;
+    cursor: not-allowed;
+}
+
+.readOnly:hover [class*='open-form-'] [class*='remove-all']:hover{
+    cursor: not-allowed;
+
+}
+
