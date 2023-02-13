@@ -1,46 +1,46 @@
-let spel = '';
+let abbreviationDay = '';
 let yesterday = '';
 
 (function(){
     const getContainer = document.querySelector('.container')
 
-    function createCardDay(){
-        getContainer.classList.add(spel, yesterday)
+    function createCardOfDay(){
+        getContainer.classList.add(abbreviationDay, yesterday)
 
         createCard = document.createElement("div")
-        createCard.classList.add("card-day-" + spel)
+        createCard.classList.add("card-day-" + abbreviationDay)
 
         createCardTitle = document.createElement("div")
-        createCardTitle.classList.add("title-" + spel)
+        createCardTitle.classList.add("title-" + abbreviationDay)
         createCardTitle.innerHTML = day
 
         createCardInfo = document.createElement("div")
-        createCardInfo.classList.add("card-info-" + spel)
-        createCardInfo.innerHTML = `Cards feitos: <p class="card-finish-${spel}"></p>`
+        createCardInfo.classList.add("card-info-" + abbreviationDay)
+        createCardInfo.innerHTML = `Cards feitos: <p class="card-finish-${abbreviationDay}"></p>`
         
         createCardContent = document.createElement("div")
-        createCardContent.classList.add("content-" + spel)
+        createCardContent.classList.add("content-" + abbreviationDay)
         createCardContent.innerHTML = `
-            <div class="cards-section-${spel}"></div>`
+            <div class="cards-section-${abbreviationDay}"></div>`
 
         createCardControls = document.createElement("div")
-        createCardControls.classList.add("controls-"+ spel)
+        createCardControls.classList.add("controls-"+ abbreviationDay)
         createCardControls.innerHTML = `
-            <div class="remove-all-${spel}">Remove All</div>
-            <div class="open-form-${spel}"> + </div>
-            <div class="back-${spel} disabled "> X </div>
+            <div class="remove-all-${abbreviationDay}">Remove All</div>
+            <div class="open-form-${abbreviationDay}"> + </div>
+            <div class="back-${abbreviationDay} disabled "> X </div>
         `
 
         createCardNewCard = document.createElement("div")
-        createCardNewCard.classList.add("add-new-card-" + spel)
+        createCardNewCard.classList.add("add-new-card-" + abbreviationDay)
         createCardNewCard.innerHTML = `
-            <label for="title-${spel}">Titulo</label>
-            <input id="title-${spel}" type="text">
+            <label for="title-${abbreviationDay}">Titulo</label>
+            <input id="title-${abbreviationDay}" type="text">
 
-            <label for="description-${spel}">Discrição</label>
-            <input id="description-${spel}" type="text">
+            <label for="description-${abbreviationDay}">Discrição</label>
+            <input id="description-${abbreviationDay}" type="text">
 
-            <div class="add-card-${spel}"> + </div>
+            <div class="add-card-${abbreviationDay}"> + </div>
         `
 
         getContainer.appendChild(createCard).appendChild(createCardTitle)
@@ -52,45 +52,50 @@ let yesterday = '';
         
     }
 
-    function getDayWeek(day){
+    function getDayOfWeek(day){
        day = new Date().getDay();
 
             switch (day) {
                 case 0:
                     day = "Domingo";
-                    spel = "do"
+                    abbreviationDay = "do"
                     yesterday = "se"
                     break;
+
                 case 1:
                     day = "Segunda-feira";
-                    spel = "se"
+                    abbreviationDay = "se"
                     yesterday = "do"
                     break;
+
                 case 2:
                     day = "Terça-feira";
-                    spel = "te"
+                    abbreviationDay = "te"
                     yesterday = "se"
                     break;
+
                 case 3:
                     day = "Quarta-feira";
-                    spel = "qa"
+                    abbreviationDay = "qa"
                     yesterday = "te"
                     break;
                 case 4:
                     day = "Quinta-feira";
-                    spel = "qu"
+                    abbreviationDay = "qu"
                     yesterday = "qa"
                     break;
+
                 case 5:
                     day = "Sexta-feira";
-                    spel = "sx"
+                    abbreviationDay = "sx"
                     yesterday = "qu"
                     break;
                 case 6:
                     day = "Sábado";
-                    spel = "sa"
+                    abbreviationDay = "sa"
                     yesterday = "sx"
                     break;
+                    
                 default:
                     day = "Dia inválido";
             }
@@ -98,8 +103,8 @@ let yesterday = '';
         return day
     }
 
-    const day = getDayWeek();
+    const day = getDayOfWeek();
 
-    createCardDay()
+    createCardOfDay()
 
 })()

@@ -2,22 +2,22 @@
 (function(){
     const today = document.querySelector('.container').classList[1]
     const yesterday = document.querySelector('.container').classList[2]
+    const getCardsSection = document.querySelector(`.cards-section-${today}`)
+    const getOpenFormButton =  document.querySelector(`.open-form-${today}`)
+    const getAddNewCardButton = document.querySelector(`.add-new-card-${today}`)
+    const getAddCardButton = document.querySelector(`.add-card-${today}`)
+    const getBackButton = document.querySelector(`.back-${today}`)
+    const getRemoveAllButton = document.querySelector(`.remove-all-${today}`)
+    const getCardsFinished = document.querySelector(`.card-finish-${today}`)
 
-    const getContent = document.querySelector(`.cards-section-${today}`)
-    const add_Card =  document.querySelector(`.open-form-${today}`)
-    const cardForm = document.querySelector(`.add-new-card-${today}`)
-    const getNewCardBtn = document.querySelector(`.add-card-${today}`)
-    const backBtn = document.querySelector(`.back-${today}`)
-    const removeAllCards = document.querySelector(`.remove-all-${today}`)
-    const cardsFinishes = document.querySelector(`.card-finish-${today}`)
     let cardId = 1;
     let cardCompleted = 0;
 
 
     toggleCardForm = ()=>{
-        cardForm.classList.toggle("active")
-        add_Card.classList.toggle("disabled")
-        backBtn.classList.toggle("disabled")
+        getAddNewCardButton.classList.toggle("active")
+        getOpenFormButton.classList.toggle("disabled")
+        getBackButton.classList.toggle("disabled")
     }
 
     createCard = ()=>{
@@ -41,14 +41,14 @@
 
         timeCard.classList.add("timeNow-" + today)
         timeCard.innerHTML = `${currentHourNow}`
-        getContent.appendChild(cardBox, cardId).appendChild(titleCard)
+        getCardsSection.appendChild(cardBox, cardId).appendChild(titleCard)
         cardBox.appendChild(descriptionCard)
         cardBox.appendChild(timeCard)
         
         cardControl(cardId)
         toggleCardForm()
         
-        saveCard(cardId,titleValue,descriptionValue,currentHourNow,0)
+        saveCards(cardId,titleValue,descriptionValue,currentHourNow,0)
 
     }
 
@@ -88,12 +88,12 @@
             doneCard(index)
         })
         removeControlDiv.addEventListener("click", () => {
-            removeCard(index)
+            removeCardById(index)
         })
     }
 
-    function doneCard(index){
-        const cardNumber = `.card-task-${index}-${today}`
+    function doneCard(id){
+        const cardNumber = `.card-task-${id}-${today}`
 
         const card = document.querySelector(cardNumber)
 
@@ -101,28 +101,30 @@
 
         if(card.classList.contains("closed")){
             cardCompleted++;
-            cardStoraged(index,'closed')
+            cardStoraged(id,'closed')
         }else{
             cardCompleted-- ;
-            cardStoraged(index)
+            cardStoraged(id)
         }
-        console.log(cardCompleted)
+
         cardsFinished(cardCompleted)
 
     }
 
     function cardsFinished(number){
-        console.log(number)
-        cardsFinishes.innerHTML = number
+
+        getCardsFinished.innerHTML = number
         
-        if(number == null || undefined)return
+        if(number == null || undefined){
+            return
+        }
 
         localStorage.setItem("cardsFinished",number)
-        saveCardDay()
+        saveCardOfDay()
     }
 
-    function removeCard(index){
-        const cardNumber = `.card-task-${index}-${today}`
+    function removeCardById(id){
+        const cardNumber = `.card-task-${id}-${today}`
         const card = document.querySelector(cardNumber)
 
         card.remove()
@@ -132,10 +134,10 @@
             cardsFinished(cardCompleted)
         }
 
-        deleteCard(index)
+        deleteCard(id)
     }
 
-    const removeAll = ()=>{
+    const removeAllCards = ()=>{
         const allCards = document.querySelector(".cards-section-" + today)
 
         while(allCards.firstChild){
@@ -148,7 +150,7 @@
         localStorage.clear();
         cardsFinished(cardCompleted)
 
-        saveCardDay()
+        saveCardOfDay()
     }
     
     function dateHour(currentHourNow){
@@ -156,7 +158,7 @@
         return currentTime
     }
     
-    function saveCard(cardId, titleValue,descriptionValue,currentHourNow,status){
+    function saveCards(cardId, titleValue,descriptionValue,currentHourNow,status){
 
         const card = {
             id:cardId,
@@ -171,10 +173,10 @@
 
         localStorage.setItem('cards-'+ today, JSON.stringify(cards))
 
-        saveCardDay()
+        saveCardOfDay()
     }
 
-    function displayTodayCard() {
+    function displayTodayCards() {
         
         cardsFinished(localStorage.getItem('cardsFinished'))
 
@@ -206,13 +208,13 @@
             cardBox.appendChild(descriptionCard)
             cardBox.appendChild(timeCard)
     
-            getContent.appendChild(cardBox)
+            getCardsSection.appendChild(cardBox)
 
             cardControl(card.id)
         }
     }
 
-    function saveCardDay(){
+    function saveCardOfDay(){
         const getCardDay = document.querySelector(`.card-day-${today}`)
         localStorage.setItem("cardsDay-" + today, getCardDay.outerHTML)
     }
@@ -226,10 +228,10 @@
         getId.status = state
 
         localStorage.setItem("cards-" + today, JSON.stringify(cards))
-        saveCardDay()
+        saveCardOfDay()
     }
 
-    function displayOldCard(){
+    function displayOldCards(){
         const getOldCardsDiv = document.querySelector(".oldCards")
         const getOldCardsLocal = localStorage.getItem("cardsDay-" + yesterday)
         
@@ -249,16 +251,16 @@
         })
         
         localStorage.setItem("cards-" + today, JSON.stringify(updatedCards))
-        saveCardDay()
+        saveCardOfDay()
 
     }
 
 
-    displayTodayCard()
-    displayOldCard()
+    displayTodayCards()
+    displayOldCards()
 
-    removeAllCards.addEventListener("click", removeAll)
-    add_Card.addEventListener("click", toggleCardForm)
-    getNewCardBtn.addEventListener("click", createCard)
-    backBtn.addEventListener("click", toggleCardForm)
+    getRemoveAllButton.addEventListener("click", removeAllCards)
+    getOpenFormButton.addEventListener("click", toggleCardForm)
+    getAddCardButton.addEventListener("click", createCard)
+    getBackButton.addEventListener("click", toggleCardForm)
 })()

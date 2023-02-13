@@ -16,6 +16,7 @@ h1{
 .container{
     display: flex;
 }
+
 /* Mudar quando for dinamico*/
 [class*='card-day']{
     display: flex;
