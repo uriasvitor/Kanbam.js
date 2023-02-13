@@ -13,13 +13,6 @@
     let cardId = 1;
     let cardCompleted = 0;
 
-
-    toggleCardForm = ()=>{
-        getAddNewCardButton.classList.toggle("active")
-        getOpenFormButton.classList.toggle("disabled")
-        getBackButton.classList.toggle("disabled")
-    }
-
     createCard = ()=>{
         const titleValue = document.querySelector(`#title-${today}`).value
         const descriptionValue = document.querySelector(`#description-${today}`).value
@@ -28,17 +21,17 @@
         const descriptionCard = document.createElement("div")
         const timeCard = document.createElement("div")
         let currentHourNow = dateHour();
-
+        
         cardId++
         
         cardBox.classList.add("card-task-" + cardId + '-' + today)
-
+        
         titleCard.classList.add("title-task-" + today)
         titleCard.innerHTML = ` <p>${titleValue}</p>`
 
         descriptionCard.classList.add("description-" + today)
         descriptionCard.innerHTML = `${descriptionValue}`
-
+        
         timeCard.classList.add("timeNow-" + today)
         timeCard.innerHTML = `${currentHourNow}`
         getCardsSection.appendChild(cardBox, cardId).appendChild(titleCard)
@@ -49,9 +42,9 @@
         toggleCardForm()
         
         saveCards(cardId,titleValue,descriptionValue,currentHourNow,0)
-
+        
     }
-
+    
     
     function createControlDiv() {
         const controlDiv = document.createElement("div")
@@ -76,11 +69,11 @@
     function cardControl(index) {
         cardNumber = `.card-task-${index}-${today}`
         const allCards = document.querySelector(cardNumber)
-    
+        
         const controlDiv = createControlDiv();
         const removeControlDiv = createRemoveControlDiv(index);
         const doneControlDiv = createDoneControlDiv(index);
-    
+        
         allCards.appendChild(controlDiv).appendChild(removeControlDiv)
         controlDiv.append(doneControlDiv)
         
@@ -91,12 +84,18 @@
             removeCardById(index)
         })
     }
-
+    
+    toggleCardForm = ()=>{
+        getAddNewCardButton.classList.toggle("active")
+        getOpenFormButton.classList.toggle("disabled")
+        getBackButton.classList.toggle("disabled")
+    }
+    
     function doneCard(id){
         const cardNumber = `.card-task-${id}-${today}`
-
+        
         const card = document.querySelector(cardNumber)
-
+        
         card.classList.toggle("closed")
 
         if(card.classList.contains("closed")){
@@ -134,7 +133,14 @@
             cardsFinished(cardCompleted)
         }
 
-        deleteCard(id)
+        const cards = JSON.parse(localStorage.getItem("cards-" + today))
+        const updatedCards = cards.filter((obj) => {
+            return obj.id != id
+        })
+        
+        localStorage.setItem("cards-" + today, JSON.stringify(updatedCards))
+        saveCardOfDay()
+
     }
 
     const removeAllCards = ()=>{
@@ -242,17 +248,6 @@
 
         console.log(getOldCardsLocal)
         
-    }
-
-    function deleteCard(id) {
-        const cards = JSON.parse(localStorage.getItem("cards-" + today))
-        const updatedCards = cards.filter((obj) => {
-            return obj.id != id
-        })
-        
-        localStorage.setItem("cards-" + today, JSON.stringify(updatedCards))
-        saveCardOfDay()
-
     }
 
 
